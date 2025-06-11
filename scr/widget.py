@@ -20,12 +20,16 @@ def mask_account_card(card_data: str) -> str:
 
     # Извлечение номера карты
     for i in card_data:
+
         if i.isdigit(): # Проверяем, является ли символ цифрой
             card_number_list += i   # Добавляем цифру в список номера карты
             account_number = "".join(card_number_list)  # Объединяем список в строку
 
-    # Возвращаем название и замаскированный номер карты
-    return account_name + get_mask_card_number(account_number)
+    # Возвращаем название и замаскированный номер карты и счета
+    if 'Счет' not in account_name:
+        return account_name + get_mask_card_number(account_number) #
+    else:
+        return account_name + get_mask_account(account_number)
 
 
 def get_date(time: str) -> str:
