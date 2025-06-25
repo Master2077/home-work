@@ -6,7 +6,7 @@
 ## Установка:
 
 1. Клонируйте репозиторий:
-git@github.com:Master2077/home-work.git
+git clone https://github.com/Master2077/home-work.git
 
 2. Установка зависимостей:
    poetry install
