@@ -45,6 +45,6 @@ def sort_by_date(data: list[dict], date: bool = True) -> list[dict]:
 
  # Вызов функции сортировки и вывод результатов
 sorted_data = sort_by_date(data)
-print(sorted_data)  # Вывод отсортированных данных
+print(sorted_data)  # Вывод отсортированных данных.
 
 
