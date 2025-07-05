@@ -47,7 +47,7 @@ def get_date(time: str) -> str:
 
 # Параметр содержащий номером карты
 # Активация функции mask_account_card
-card_data_number: str = "Visa Platinum 7000792289606361"
+card_data_number: str = "Master Card 1234567890123456"
 card_data_number_result: str = mask_account_card(card_data_number)
 print(card_data_number_result)
 

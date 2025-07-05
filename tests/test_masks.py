@@ -3,7 +3,7 @@ from scr.masks import get_mask_card_number, get_mask_account
 
 
 @pytest.mark.parametrize('inp, expected',
-    [("123456789012345", "1234567890*2345"),
+    [('123456789012345', '1234567890*2345'),
      ('0000000000000000000', '0000000000*****0000')]
 )
 def test_get_mask_card_number_valid(inp, expected):
