@@ -197,4 +197,4 @@ cython_debug/
 .flake8
 lesson.py
 pyproject.toml
-tests/
+#tests/
