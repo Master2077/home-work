@@ -1,5 +1,6 @@
 import pytest
-from scr.generators import filter_by_currency, transaction_descriptions, card_number_generator
+
+from scr.generators import card_number_generator, filter_by_currency, transaction_descriptions
 
 
 # Фикстура с набором тестовых транзакций
