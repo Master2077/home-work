@@ -87,3 +87,4 @@ def test_card_number_generator_empty_range(capsys):
     card_number_generator(5, 1)
     captured = capsys.readouterr().out
     assert captured == ""
+print('')
