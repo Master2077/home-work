@@ -123,4 +123,3 @@ if __name__ == "__main__":
 
     # вызов генератора карты
     card_number_generator(1, 5)
-print('')
