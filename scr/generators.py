@@ -102,8 +102,9 @@ def card_number_generator(start, stop):
         part2 = result_card_number[4:8]
         part3 = result_card_number[8:12]
         part4 = result_card_number[12:16]
+        result  = f'{part1} {part2} {part3} {part4}'
         # выводим номер карты
-        print(part1, part2, part3, part4)
+        yield result
 
 
 if __name__ == "__main__":
@@ -122,4 +123,5 @@ if __name__ == "__main__":
         print(next(descriptions))
 
     # вызов генератора карты
-    card_number_generator(1, 5)
+    for card_number in card_number_generator(1, 5):
+        print(card_number)
