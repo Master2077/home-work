@@ -102,7 +102,7 @@ def card_number_generator(start, stop):
         part2 = result_card_number[4:8]
         part3 = result_card_number[8:12]
         part4 = result_card_number[12:16]
-        result  = f'{part1} {part2} {part3} {part4}'
+        result = f"{part1} {part2} {part3} {part4}"
         # выводим номер карты
         yield result
 

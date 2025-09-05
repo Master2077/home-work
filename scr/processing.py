@@ -48,7 +48,8 @@ def sort_by_date(transactions: List[Dict[str, Any]], date: bool = False) -> List
     # Сортируем данные по дате, используя функцию parse_date
     return sorted(transactions, key=lambda x: parse_date(x["date"]), reverse=date)
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     # Вызов функции фильтрации и вывод результатов
     state_input: str = input("Введите состояние карты (EXECUTED или CANCELED:")
     result: List[Dict[str, Any]] = filter_by_state(transactions, state_input)
