@@ -32,12 +32,14 @@ def log(filename=None):
                     with open(filename, "a", encoding="utf-8") as log_file:
                         log_file.write(log_message)
                 else:
-                    print(log_message)
+                    return log_message
+
+                return result
             except Exception as e:
                 end_time = time.time()  # Запоминаем время окончания выполнения
                 error_message = (
                     f"\nФункция: {function.__name__}\n"
-                    f"Ошибка: {e}\n"
+                    f"Ошибка: {str(e)}\n"
                     f"Входные параметры: {inspect.getcallargs(function, *args, **kwargs)}\n"
                     f"Время выполнения: {end_time - start_time}\n"
                 )
@@ -46,14 +48,14 @@ def log(filename=None):
                         log_file.write(error_message)
 
                 else:
-                    print(error_message)
+                    return error_message
 
         return inner  # Возвращаем обертку
 
     return wrapper  # Возвращаем декоратор
 
 
-@log(filename="mylog.txt")  # Убедитесь, что вы вызываете декоратор с ()
+@log(filename='mylog.txt')  # Убедитесь, что вы вызываете декоратор с ()
 def my_function(x, y):
     """
     Делит x на y.
@@ -62,4 +64,4 @@ def my_function(x, y):
 
 
 # Вызов функции
-my_function(10, 10)
+print(my_function(10, 0))

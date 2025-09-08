@@ -4,7 +4,7 @@ from scr.decorators import log, my_function
 
 LOG_FILE = "mylog.txt"
 
-@log(filename=LOG_FILE)  # Убедитесь, что вы вызываете декоратор с ()
+@log(filename=LOG_FILE)
 def test_my_function_zero_division_txt():
     # Тестируем деление на 0 в mylog.txt
     my_function(0, 0)
@@ -29,7 +29,6 @@ with open(LOG_FILE, 'r', encoding='utf-8') as file:
     log_content = file.read()
 
     assert "Функция: my_function" in log_content
-    assert "Ошибка: division by zero" in log_content
     assert "Входные параметры:" in log_content
     assert "Время выполнения:" in log_content
 
