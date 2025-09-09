@@ -48,14 +48,14 @@ def log(filename=None):
                         log_file.write(error_message)
 
                 else:
-                    return error_message
+                    print(error_message)
 
         return inner  # Возвращаем обертку
 
     return wrapper  # Возвращаем декоратор
 
 
-@log(filename='mylog.txt')  # Убедитесь, что вы вызываете декоратор с ()
+@log()  # Убедитесь, что вы вызываете декоратор с ()
 def my_function(x, y):
     """
     Делит x на y.
