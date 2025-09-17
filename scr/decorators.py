@@ -55,7 +55,7 @@ def log(filename=None):
     return wrapper  # Возвращаем декоратор
 
 
-@log()  # Убедитесь, что вы вызываете декоратор с ()
+@log(filename='mylog.txt')  # Убедитесь, что вы вызываете декоратор с ()
 def my_function(x, y):
     """
     Делит x на y.
@@ -64,4 +64,4 @@ def my_function(x, y):
 
 
 # Вызов функции
-print(my_function(10, 0))
+print(my_function(10, 10))
