@@ -1,60 +1,99 @@
-from __future__ import annotations
-from typing import Any, Dict, List, Tuple
-
-# Исходные данные: список словарей с информацией о транзакциях
-transactions: List[Dict[str, Any]] = [
-    {"id": 41428829, "state": "EXECUTED", "date": "2019-07-03T18:35:29.512364"},
-    {"id": 939719570, "state": "EXECUTED", "date": "2018-06-30T02:08:58.425572"},
-    {"id": 594226727, "state": "CANCELED", "date": "2018-09-12T21:27:25.241689"},
-    {"id": 615064591, "state": "CANCELED", "date": "2018-10-14T08:21:33.419441"},
-]
-
-
-def filter_by_state(transactions: List[Dict[str, Any]], state: str = "EXECUTED") -> List[Dict[str, Any]]:
-    """
-    Фильтрует и возвращает транзакции только с нужным состоянием.
-    """
-    card_status_information: List[Dict[str, Any]] = []  # Список для хранения выбранных отобранных транзакций
-    two_state_options: Tuple[str, str] = ("EXECUTED", "CANCELED")  # Допустимые варианты состояния
-
-    # Замена на EXECUTED, если пользователь указал неверные данные
-    if state not in two_state_options:
-        state = "EXECUTED"
-
-    # Проходим по всем записям и добавляем в результат
-    # только те, у которых state == выбранному
-    for i in transactions:
-        if i["state"] == state:
-            card_status_information.append(i)
-    return card_status_information
-
-
-def sort_by_date(transactions: List[Dict[str, Any]], date: bool = False) -> List[Dict[str, Any]]:
-    """
-    Сортирует данные по дате транзакции (по убыванию)
-    """
-
-    def parse_date(date_str: str) -> int:
-        """
-        Преобразует строку даты в числовое значение для сортировки
-        """
-        date_part, time_part = date_str.split("T")  # Разделяем дату и время
-        year, month, day = map(int, date_part.split("-"))  # Извлекаем год, месяц и день
-        hour, minute, second = map(float, time_part.split(":"))  # Извлекаем часы, минуты и секунды
-
-        # Преобразуем дату и время в одно целое число
-        return year * 10000000000 + month * 100000000 + day * 1000000 + int(hour * 10000 + minute * 100 + second)
-
-    # Сортируем данные по дате, используя функцию parse_date
-    return sorted(transactions, key=lambda x: parse_date(x["date"]), reverse=date)
-
-
-if __name__ == "__main__":
-    # Вызов функции фильтрации и вывод результатов
-    state_input: str = input("Введите состояние карты (EXECUTED или CANCELED:")
-    result: List[Dict[str, Any]] = filter_by_state(transactions, state_input)
-    print(result)  # Вывод списка выполненных транзакций
-
-    # Вызов функции сортировки и вывод результатов
-    sorted_data: List[Dict[str, Any]] = sort_by_date(transactions)
-    print(sorted_data)  # Вывод отсортированных данных.
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Coverage for tests\__init__.py: 100%</title>
+    <link rel="icon" sizes="32x32" href="favicon_32_cb_58284776.png">
+    <link rel="stylesheet" href="style_cb_db813965.css" type="text/css">
+    <script src="coverage_html_cb_497bf287.js" defer></script>
+</head>
+<body class="pyfile">
+<header>
+    <div class="content">
+        <h1>
+            <span class="text">Coverage for </span><b>tests\__init__.py</b>:
+            <span class="pc_cov">100%</span>
+        </h1>
+        <aside id="help_panel_wrapper">
+            <input id="help_panel_state" type="checkbox">
+            <label for="help_panel_state">
+                <img id="keyboard_icon" src="keybd_closed_cb_ce680311.png" alt="Show/hide keyboard shortcuts">
+            </label>
+            <div id="help_panel">
+                <p class="legend">Shortcuts on this page</p>
+                <div class="keyhelp">
+                    <p>
+                        <kbd>r</kbd>
+                        <kbd>m</kbd>
+                        <kbd>x</kbd>
+                        &nbsp; toggle line displays
+                    </p>
+                    <p>
+                        <kbd>j</kbd>
+                        <kbd>k</kbd>
+                        &nbsp; next/prev highlighted chunk
+                    </p>
+                    <p>
+                        <kbd>0</kbd> &nbsp; (zero) top of page
+                    </p>
+                    <p>
+                        <kbd>1</kbd> &nbsp; (one) first highlighted chunk
+                    </p>
+                    <p>
+                        <kbd>[</kbd>
+                        <kbd>]</kbd>
+                        &nbsp; prev/next file
+                    </p>
+                    <p>
+                        <kbd>u</kbd> &nbsp; up to the index
+                    </p>
+                    <p>
+                        <kbd>?</kbd> &nbsp; show/hide this help
+                    </p>
+                </div>
+            </div>
+        </aside>
+        <h2>
+            <span class="text">0 statements &nbsp;</span>
+            <button type="button" class="run button_toggle_run" value="run" data-shortcut="r" title="Toggle lines run">0<span class="text"> run</span></button>
+            <button type="button" class="mis show_mis button_toggle_mis" value="mis" data-shortcut="m" title="Toggle lines missing">0<span class="text"> missing</span></button>
+            <button type="button" class="exc show_exc button_toggle_exc" value="exc" data-shortcut="x" title="Toggle lines excluded">0<span class="text"> excluded</span></button>
+        </h2>
+        <p class="text">
+            <a id="prevFileLink" class="nav" href="index.html">« prev</a>
+            &nbsp;&nbsp;
+            <a id="indexLink" class="nav" href="index.html">^ index</a>
+            &nbsp;&nbsp;
+            <a id="nextFileLink" class="nav" href="z_a44f0ac069e85531_conftest_py.html">next »</a>
+            &nbsp;&nbsp;&nbsp;
+            <a class="nav" href="https://coverage.readthedocs.io/en/7.9.2">coverage.py v7.9.2</a>, created at 2025-08-25 01:52 +0300
+        </p>
+        <aside class="hidden">
+            <button type="button" class="button_next_chunk" data-shortcut="j"></button>
+            <button type="button" class="button_prev_chunk" data-shortcut="k"></button>
+            <button type="button" class="button_top_of_page" data-shortcut="0"></button>
+            <button type="button" class="button_first_chunk" data-shortcut="1"></button>
+            <button type="button" class="button_prev_file" data-shortcut="["></button>
+            <button type="button" class="button_next_file" data-shortcut="]"></button>
+            <button type="button" class="button_to_index" data-shortcut="u"></button>
+            <button type="button" class="button_show_hide_help" data-shortcut="?"></button>
+        </aside>
+    </div>
+</header>
+<main id="source">
+</main>
+<footer>
+    <div class="content">
+        <p>
+            <a class="nav" href="index.html">« prev</a>
+            &nbsp;&nbsp;
+            <a class="nav" href="index.html">^ index</a>
+            &nbsp;&nbsp;
+            <a class="nav" href="z_a44f0ac069e85531_conftest_py.html">next »</a>
+            &nbsp;&nbsp;&nbsp;
+            <a class="nav" href="https://coverage.readthedocs.io/en/7.9.2">coverage.py v7.9.2</a>, created at 2025-08-25 01:52 +0300
+        </p>
+    </div>
+</footer>
+</body>
+</html>
