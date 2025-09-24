@@ -1,7 +1,7 @@
 import json
 import os
 
-def load_operations(filename='operations.json'):
+def load_operations():
     try:
         with open('../data/operations.json', encoding='utf-8') as f:
             data = json.load(f)
