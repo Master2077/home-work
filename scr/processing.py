@@ -1,4 +1,5 @@
 from __future__ import annotations
+
 from typing import Any, Dict, List, Tuple
 
 # Исходные данные: список словарей с информацией о транзакциях
