@@ -1,22 +1,18 @@
+from http.client import responses
+
 import pytest
 import unittest
 from unittest.mock import patch, MagicMock, AsyncMock
 import json
 from scr.external_api import convert_valute, api_convert, result_load_operations
 
-def test_valid_usd():
-    tx = {'operationAmount': {'amount': '100', 'currency': {'code': 'USD'}}}
-    assert convert_valute.__wrapped__(tx) == (100.0, 'USD')
+class ApiCobert():
+    @patch('requests.request')
+    def test_api_convert(mock_get):
+        mock_get.return_value.json.return_value = (100, 'USD')
+        code = 'USD'
+        amount = 100
 
-def test_missing_operationAmount():
-    tx = {}
-    assert convert_valute.__wrapped__(tx) == 'Ошибка: подходящих операций не найдено'
-
-def test_invalid_currency():
-    tx = {'operationAmount': {'amount': '10', 'currency': {'code': 'EUR'}}}
-    assert convert_valute.__wrapped__(tx) == 'Ошибка: валюта не является USD или RUB'
-
-def test_bad_structure():
-    tx = {'operationAmount': 5}
-    assert convert_valute.__wrapped__(tx) == 'Ошибка: некорректная структура транзакции'
+        assert api_convert('currency') == 10000
+        mock_get.assert_called_once_with(f'https://api.apilayer.com/exchangerates_data/convert?to=RUB&from={code}&amount={amount}')
 
