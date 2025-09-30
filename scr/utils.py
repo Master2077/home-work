@@ -7,7 +7,7 @@ path = "../data/operations.json"
 def load_operations(path):
     try:
         # Читаем данные в operations.json
-        with open(path, encoding="utf-8") as f:
+        with open(path, encoding='utf-8') as f:
             data = json.load(f)
         # Если в operations.json нет списка, то возвращаем пустой список
         if not isinstance(data, list):
@@ -35,19 +35,19 @@ def convert_valute(transactions):
     """
     try:
         # Получаем operationAmount из транзакции
-        op = transactions.get("operationAmount")
+        op = transactions.get('operationAmount')
         # Если operationAmount нет, возвращаем ошибку
         if not op:
-            return "Ошибка: подходящих операций не найдено"
-        # Возвращаем ошибку если валюта не является USD или RUB
-        if op["currency"]["code"] not in ("USD", "EUR"):
-            return "Ошибка: валюта не является USD или EUR"
+            return 'Ошибка: подходящих операций не найдено'
+        # Возвращаем ошибку если валюта не является USD, EUR или RUB
+        if op['currency']['code'] not in ('USD', 'EUR', 'RUB'):
+            return 'Ошибка: валюта не является USD или EUR'
         # Получаем код валюты
-        code = op["currency"]["code"]
+        code = op['currency']['code']
         # Получаем сумму и приводим ее к типу float
-        amount = float(op["amount"])
+        amount = float(op['amount'])
         # Возвращаем сумму и валюту
         return amount, code
     # Ошибка при некорректной структуре транзакции
     except (TypeError, KeyError, ValueError) as e:
-        return "Ошибка: некорректная структура транзакции"
+        return 'Ошибка: некорректная структура транзакции'

@@ -51,5 +51,5 @@ if __name__ == "__main__":
     for transaction in result_load_operations:
         convert = convert_valute(transaction)
         with open(convert_file, "a", encoding="utf-8") as f:
-            f.write(str(convert))
+            f.write((api_convert(convert)))
             f.write("\n")

@@ -1,18 +1,27 @@
+import pytest
 import unittest
 from unittest.mock import patch, mock_open
 import json
 from scr.utils import load_operations, convert_valute
 
-def test_valid_usd():
-    tx = {'operationAmount': {'amount': '100', 'currency': {'code': 'USD'}}}
-    assert convert_valute(tx) == (100.0, 'USD')
+import pytest
+
+@pytest.mark.parametrize("code, amount, expected", [
+    ('USD', 100, (100.0, 'USD')),
+    ('RUB', 100, (100.0, 'RUB')),
+    ('EUR', 100, (100.0, 'EUR')),
+])
+def test_convert_valute(code, amount, expected):
+    tx = {'operationAmount': {'amount': amount, 'currency': {'code': code}}}
+    assert convert_valute(tx) == expected
+
 
 def test_missing_operationAmount():
     tx = {}
     assert convert_valute(tx) == 'Ошибка: подходящих операций не найдено'
 
 def test_invalid_currency():
-    tx = {'operationAmount': {'amount': '10', 'currency': {'code': 'RUB'}}}
+    tx = {'operationAmount': {'amount': '10', 'currency': {'code': 'BTC'}}}
     assert convert_valute(tx) == 'Ошибка: валюта не является USD или EUR'
 
 def test_bad_structure():
