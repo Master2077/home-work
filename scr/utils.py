@@ -1,5 +1,7 @@
 import json
 
+from blib2to3.pytree import convert
+
 # Переменная с указанием пути до json файла
 path = "../data/operations.json"
 
@@ -21,33 +23,3 @@ def load_operations(path):
 
 result_load_operations = load_operations(path)
 
-
-def convert_valute(transactions):
-    """
-    Извлекает сумму и валюту из транзакции.
-
-    Принимает словарь transactions, который должен содержать ключ operationAmount,
-    внутри которого есть сумма (amount) и код валюты (code).
-
-    Возвращает:
-        - кортеж (amount, code), если всё получилось.
-        - или сообщение об ошибке, если структура данных неправильная.
-    """
-    try:
-        # Получаем operationAmount из транзакции
-        op = transactions.get('operationAmount')
-        # Если operationAmount нет, возвращаем ошибку
-        if not op:
-            return 'Ошибка: подходящих операций не найдено'
-        # Возвращаем ошибку если валюта не является USD, EUR или RUB
-        if op['currency']['code'] not in ('USD', 'EUR', 'RUB'):
-            return 'Ошибка: валюта не является USD или EUR'
-        # Получаем код валюты
-        code = op['currency']['code']
-        # Получаем сумму и приводим ее к типу float
-        amount = float(op['amount'])
-        # Возвращаем сумму и валюту
-        return amount, code
-    # Ошибка при некорректной структуре транзакции
-    except (TypeError, KeyError, ValueError) as e:
-        return 'Ошибка: некорректная структура транзакции'
