@@ -34,23 +34,24 @@ def convert_valute(transactions):
         # Получаем сумму и приводим ее к типу float
         amount = float(op['amount'])
         # Формируем URL для запроса к apilayer
-        url = f"https://api.apilayer.com/exchangerates_data/convert?to=RUB&from={code}&amount={amount}"
+        url = f'https://api.apilayer.com/exchangerates_data/convert?to=RUB&from={code}&amount={amount}'
         # Получаем API-ключ из .env
-        API_KEY = getenv("API_KEY")
+        API_KEY = getenv('API_KEY')
         # Проверка наличия API_KEY
         if not API_KEY:
-            return "Ошибка: API_KEY не установлен"
+            return 'Ошибка: API_KEY не установлен'
         # Данные для GET запроса
-        headers = {"apikey": API_KEY}
+        headers = {'apikey': API_KEY}
         # Выполняем GET-запрос
         response = requests.request("GET", url, headers=headers)
         # Если код ответа не 200 — возвращаем сообщение об ошибке с кодом статуса
         if response.status_code != 200:
-            return f"Ошибка API {response.status_code}"
+            return f'Ошибка API {response.status_code}'
         # Текст ответа
         result = response.json()
         # Возвращаем результат конвертации
-        return f"В рублях: {float(result)}"
+        if 'result' in result:
+            return f'В рублях: {result['result']}'
 
     # Возвращаем ошибку в случае некорректной структуры транзакции
     except Exception as e:
