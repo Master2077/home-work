@@ -51,7 +51,7 @@ def convert_valute(transactions):
         result = response.json()
         # Возвращаем результат конвертации
         if 'result' in result:
-            return f'В рублях: {result['result']}'
+            return f'В рублях: {float(result['result'])}'
 
     # Возвращаем ошибку в случае некорректной структуры транзакции
     except Exception as e:
