@@ -5,6 +5,7 @@ from dotenv import load_dotenv
 
 from scr.utils import result_load_operations
 
+
 # Загружаем переменные окружения из .env
 load_dotenv()
 
@@ -28,7 +29,7 @@ def convert_valute(transactions):
             return 'Ошибка: подходящих операций не найдено'
         # Возвращаем ошибку если валюта не является USD, EUR или RUB
         if op['currency']['code'] not in ('USD', 'EUR', 'RUB'):
-            return 'Ошибка: валюта не является USD или EUR'
+            return 'Ошибка: валюта не является USD, EUR или RUB'
         # Получаем код валюты
         code = op['currency']['code']
         # Получаем сумму и приводим ее к типу float
@@ -51,18 +52,18 @@ def convert_valute(transactions):
         result = response.json()
         # Возвращаем результат конвертации
         if 'result' in result:
-            return f'В рублях: {float(result['result'])}'
+            return float(result['result'])
 
     # Возвращаем ошибку в случае некорректной структуры транзакции
     except Exception as e:
-        return "Ошибка: некорректная структура транзакции"
+        return 'Ошибка: некорректная структура транзакции'
 
-convert_file = "../data/convert.txt"
+convert_file = '../data/convert.txt'
 
 # С помощью цикла по очереди вставляем в нее данные из result_load_operations
-if __name__ == "__main__":
+if __name__ == '__main__':
     for transaction in result_load_operations:
         convert = convert_valute(transaction)
-        with open(convert_file, "a", encoding="utf-8") as f:
-            f.write(convert)
-            f.write("\n")
+        with open(convert_file, 'a', encoding='utf-8') as f:
+            f.write(f'{convert}')
+            f.write('\n')

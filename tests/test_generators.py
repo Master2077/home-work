@@ -75,11 +75,9 @@ def test_transaction_descriptions_various(transactions, expected):
         ),
     ],
 )
-def test_card_number_generator_format_and_range(capsys, start, stop, expected_lines):
-    # Запускаем генератор и перехватываем вывод
-    card_number_generator(start, stop)
-    captured = capsys.readouterr().out.strip().splitlines()
-    assert captured == expected_lines
+def test_card_number_generator_format_and_range(start, stop, expected_lines):
+    result = list(card_number_generator(start, stop))
+    assert result == expected_lines
 
 
 def test_card_number_generator_empty_range(capsys):

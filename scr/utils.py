@@ -1,7 +1,5 @@
 import json
 
-from blib2to3.pytree import convert
-
 # Переменная с указанием пути до json файла
 path = "../data/operations.json"
 

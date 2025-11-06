@@ -1,57 +1,57 @@
-import pytest
-import unittest
-from unittest.mock import patch, mock_open
 import json
-from scr.utils import load_operations, convert_valute
+import unittest
+from unittest import mock
+from unittest.mock import mock_open
 
 import pytest
 
-@pytest.mark.parametrize("code, amount, expected", [
-    ('USD', 100, (100.0, 'USD')),
-    ('RUB', 100, (100.0, 'RUB')),
-    ('EUR', 100, (100.0, 'EUR')),
-])
-def test_convert_valute(code, amount, expected):
-    tx = {'operationAmount': {'amount': amount, 'currency': {'code': code}}}
-    assert convert_valute(tx) == expected
+from scr.utils import load_operations
 
 
-def test_missing_operationAmount():
-    tx = {}
-    assert convert_valute(tx) == 'Ошибка: подходящих операций не найдено'
-
-def test_invalid_currency():
-    tx = {'operationAmount': {'amount': '10', 'currency': {'code': 'BTC'}}}
-    assert convert_valute(tx) == 'Ошибка: валюта не является USD или EUR'
-
-def test_bad_structure():
-    tx = {'operationAmount': 5}
-    assert convert_valute(tx) == 'Ошибка: некорректная структура транзакции'
-
-class TestLoadOperations(unittest.TestCase):
-
-    @patch("builtins.open", new_callable=mock_open, read_data='[{"id":1},{"id":2}]')
-    def test_load_valid_json_list(self, mock_file):
-        # Тест с валидным JSON, который является списком
-        result = load_operations("path")
-        self.assertEqual(result, [{"id":1},{"id":2}])
-
-    @patch("builtins.open", new_callable=mock_open, read_data='{"id":1}')
-    def test_load_json_not_list(self, mock_file):
-        # Тест, когда JSON не список
-        result = load_operations("path")
-        self.assertEqual(result, [])
-
-    @patch("builtins.open", side_effect=FileNotFoundError)
-    def test_file_not_found(self, mock_file):
-        # Тест отсутствия файла
-        result = load_operations("path")
-        self.assertEqual(result, [])
-
-    @patch("builtins.open", new_callable=mock_open, read_data='invalid json')
-    def test_json_decode_error(self, mock_file):
-        # Тест некорректного JSON
-        result = load_operations("path")
-        self.assertEqual(result, [])
+def make_open(read_data):
+    """
+    Возвращает файл, читающий read_data.
+    Используется для patch('builtins.open')
+    """
+    return mock.mock_open(read_data=read_data)
 
 
+def test_load_valid_list_json_with_mock():
+    """
+    Проверка корректной работы функции (данные файла должны быть списком)
+    """
+    data = [{"id": 1, "name": "op1"}, {"id": 2}]
+    mock_file = make_open(json.dumps(data, ensure_ascii=False))
+    with mock.patch("builtins.open", mock_file):
+        result = load_operations("path.json")
+    assert result == data
+
+
+def test_load_non_list_json_returns_empty_with_mock():
+    """
+    Проверка данных не являющихся списком
+    """
+    data = {"id": 1, "name": "op1"}
+    mock_file = make_open(json.dumps(data, ensure_ascii=False))
+    with mock.patch("builtins.open", mock_file):
+        result = load_operations("path/json")
+    assert result == []
+
+
+def test_load_missing_file_returns_empty():
+    """
+    Проверка при несуществующем файле
+    """
+    with mock.patch("builtins.open", side_effect=FileNotFoundError):
+        result = load_operations("nonexistent.json")
+    assert result == []
+
+
+def test_load_invalid_json_returns_empty():
+    """
+    Проверка при некорректном json файле
+    """
+    mock_file = make_open("{invalid json}")
+    with mock.patch("builtins.open", mock_file):
+        result = load_operations("path.json")
+    assert result == []

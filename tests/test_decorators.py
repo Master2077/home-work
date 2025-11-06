@@ -4,6 +4,7 @@ from scr.decorators import log, my_function
 
 LOG_FILE = "mylog.txt"
 
+
 @log(filename=LOG_FILE)
 def test_my_function_zero_division_txt():
     # Тестируем деление на 0 в mylog.txt
@@ -13,7 +14,7 @@ def test_my_function_zero_division_txt():
     my_function(10, 0)
 
 
-with open(LOG_FILE, 'r', encoding='utf-8') as file:
+with open(LOG_FILE, "r", encoding="utf-8") as file:
     log_content = file.read()
 
     assert "Функция: my_function" in log_content
@@ -27,10 +28,11 @@ def test_my_function_valid_txt():
     # Тестируем деление на 2 в mylog.txt
     def my_function(x, y):
         return x / y
+
     my_function(10, 2)
 
 
-with open(LOG_FILE, 'r', encoding='utf-8') as file:
+with open(LOG_FILE, "r", encoding="utf-8") as file:
     log_content = file.read()
 
     assert "Функция: my_function" in log_content
@@ -38,13 +40,13 @@ with open(LOG_FILE, 'r', encoding='utf-8') as file:
     assert "Время выполнения:" in log_content
 
 
-
 @log(filename=None)
 def test_my_function_zero_division_consol(capsys):
     # Тестируем деление на 0 в консоли
     def my_function(x, y):
         return x / y
-    my_function(0,0)
+
+    my_function(0, 0)
 
     captured = capsys.readouterr()
 
@@ -54,11 +56,13 @@ def test_my_function_zero_division_consol(capsys):
     assert "Входные параметры:" in captured.out
     assert "Время выполнения:" in captured.out
 
+
 @log(filename=None)
 def test_my_function_valid_consol(capsys):
     # Тестируем деление на 2 в консоли
     def my_function(x, y):
         return x / y
+
     my_function(10, 2)
 
     captured = capsys.readouterr()
