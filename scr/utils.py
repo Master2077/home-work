@@ -9,7 +9,6 @@ file_handler1.setFormatter(file_formatter1)
 logger.addHandler(file_handler1)
 
 
-
 # Переменная с указанием пути до json файла
 path = "../data/operations.json"
 
