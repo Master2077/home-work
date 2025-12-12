@@ -1,4 +1,4 @@
-from scr.masks import get_mask_account, get_mask_card_number  # Импортируем функции для маскирования данных
+from src.masks import get_mask_account, get_mask_card_number  # Импортируем функции для маскирования данных
 
 
 def mask_account_card(card_data: str) -> str:

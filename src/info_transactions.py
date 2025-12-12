@@ -1,4 +1,3 @@
-import pandas
 from pandas import read_csv, read_excel
 
 

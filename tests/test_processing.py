@@ -2,7 +2,7 @@ from typing import Any, Dict, List
 
 import pytest
 
-from scr.processing import filter_by_state, sort_by_date
+from src.processing import filter_by_state, sort_by_date
 
 
 @pytest.mark.parametrize(

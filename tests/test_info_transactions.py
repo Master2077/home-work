@@ -4,7 +4,7 @@ import unittest
 from unittest import mock
 
 
-from scr.info_transactions import transactions_csv, transactions_xlsx
+from src.info_transactions import transactions_csv, transactions_xlsx
 
 class TestTransactions(unittest.TestCase):
     def data(self):

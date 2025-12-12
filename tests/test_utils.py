@@ -5,7 +5,7 @@ from unittest.mock import mock_open
 
 import pytest
 
-from scr.utils import load_operations
+from src.utils import load_operations
 
 
 def make_open(read_data):

@@ -1,6 +1,6 @@
 import pytest
 
-from scr.decorators import log, my_function
+from src.decorators import log, my_function
 
 LOG_FILE = "mylog.txt"
 

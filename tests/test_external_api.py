@@ -4,8 +4,8 @@ from unittest.mock import Mock, patch
 
 import pytest
 
-from scr.external_api import convert_valute
-from scr.utils import result_load_operations
+from src.external_api import convert_valute
+from src.utils import result_load_operations
 
 
 @pytest.fixture
@@ -71,7 +71,7 @@ def test_no_api_key(monkeypatch, valid_transaction):
     assert result == "Ошибка: API_KEY не установлен"
 
 
-@mock.patch("scr.external_api.requests.request")
+@mock.patch("src.external_api.requests.request")
 def test_call_api_error(mock_request, valid_transaction):
     mock_response = Mock()
     mock_response.status_code = 500

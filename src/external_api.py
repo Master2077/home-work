@@ -3,7 +3,7 @@ from os import getenv
 import requests
 from dotenv import load_dotenv
 
-from scr.utils import result_load_operations
+from src.utils import result_load_operations
 
 # Загружаем переменные окружения из .env
 load_dotenv()
