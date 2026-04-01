@@ -44,21 +44,21 @@ def get_date(time: str) -> str:
     # Возвращаем дату в формате дд.мм.гггг'
     return day + "." + month + "." + year
 
+if __name__ == '__main__':
+    # Параметр содержащий номером карты
+    # Активация функции mask_account_card
+    card_data_number: str = "Master Card 1234567890123456"
+    card_data_number_result: str = mask_account_card(card_data_number)
+    print(card_data_number_result)
 
-# Параметр содержащий номером карты
-# Активация функции mask_account_card
-card_data_number: str = "Master Card 1234567890123456"
-card_data_number_result: str = mask_account_card(card_data_number)
-print(card_data_number_result)
+    # Параметр содержащий банковский счет
+    # Активация функции mask_account_card
+    card_data_account: str = "Счет 73654108430135874305"
+    card_data_account_result: str = mask_account_card(card_data_account)
+    print(card_data_account_result)
 
-# Параметр содержащий банковский счет
-# Активация функции mask_account_card
-card_data_account: str = "Счет 73654108430135874305"
-card_data_account_result: str = mask_account_card(card_data_account)
-print(card_data_account_result)
-
-# Параметр содержащий время
-# Активация функции get_date
-time: str = "2024-03-11T02:26:18.671407"
-time_result: str = get_date("2024-03-11T02:26:18.671407")
-print(time_result)
+    # Параметр содержащий время
+    # Активация функции get_date
+    time: str = "2024-03-11T02:26:18.671407"
+    time_result: str = get_date("2024-03-11T02:26:18.671407")
+    print(time_result)

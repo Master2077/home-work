@@ -31,5 +31,6 @@ def load_operations(path):
         logger.error(f"Файл {path} не обнаружен")
         return []
 
-
 result_load_operations = load_operations(path)
+if __name__ == '__main__':
+    print(result_load_operations)
