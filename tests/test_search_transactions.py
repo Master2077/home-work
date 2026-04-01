@@ -1,10 +1,7 @@
 import pytest
-import unittest
-import re
 
 from collections import Counter
 
-from src.info_transactions import result_csv, result_xlsx
 from src.search_transactions import process_bank_search, process_bank_operations
 
 

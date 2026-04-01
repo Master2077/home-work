@@ -1,9 +1,7 @@
 import re
-
 from collections import Counter
 
 from src.info_transactions import result_csv, result_xlsx
-
 
 search = 'EXECUTED'
 
@@ -29,7 +27,9 @@ def process_bank_operations(data, description):
 
 
 if __name__ == "__main__":
-    a = process_bank_search(result_xlsx, search)
-    print(a)
-    b = process_bank_operations(result_xlsx, description)
-    print(b)
+    result_process_bank_search_xlsx = process_bank_search(result_xlsx, search)
+    print(result_process_bank_search_xlsx)
+    result_process_bank_search_csv = process_bank_search(result_csv, search)
+    print(result_process_bank_search_csv)
+    result_process_bank_operations = process_bank_operations(result_xlsx, description)
+    print(result_process_bank_operations)

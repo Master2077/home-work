@@ -54,7 +54,7 @@ def convert_valute(transactions):
             return float(result["result"])
 
     # Возвращаем ошибку в случае некорректной структуры транзакции
-    except Exception as e:
+    except Exception:
         return "Ошибка: некорректная структура транзакции"
 
 

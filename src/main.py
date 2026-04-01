@@ -1,16 +1,11 @@
-import re
 import json
 import time
-
 from collections import defaultdict
 from datetime import datetime
 
-
 from src.info_transactions import result_csv, result_xlsx
-
-from src.widget import mask_account_card, get_date
-
 from src.search_transactions import process_bank_search
+from src.widget import get_date, mask_account_card
 
 
 # Загрузка и проверка JSON файла
@@ -37,6 +32,7 @@ def main():
     filter_by_date = None
     filter_by_rub = None
     filter_by_word = None
+
     # Выбор источника данных
     while True:
         file_of_interest = input(
@@ -58,6 +54,7 @@ def main():
             print("Для обработки выбран XLSX-файл.")
             break
         print("Данный пункт в меню отсутствует.")
+
     # Фильтрация по статусу операции
     while True:
         file_filtering1 = input(
@@ -69,11 +66,12 @@ def main():
             print(f'Операции отфильтрованы по статусу "{file_filtering1}"')
             break
         print(f'Статус операции "{file_filtering1}" не доступен')
+
     # Сортировка по дате (опционально)
     while True:
         file_filtering2 = input("Отсортировать операции по дате? Да/Нет\n")
         if file_filtering2.lower() == "да":
-            # Выполняем сортировку по дате при выборе "да"#
+            # Выполняем сортировку по дате при выборе "да"
             file_filtering3 = input("Отсортировать по возрастанию или по убыванию?\n")
             try:
                 # Сортировка по возрастанию
@@ -82,27 +80,27 @@ def main():
                         groups = defaultdict(list)
                         for item in filter_by_status:
                             date_str = item.get("date")
-                            groups[date_str].append(item)  # date_str может быть None — будет ключ None
-                        # отсортировать ключи, пропуская None
+                            groups[date_str].append(item)
                         sorted_dates = sorted(
-                            (d for d in groups.keys() if d), key=lambda s: datetime.strptime(s, "%Y-%m-%dT%H:%M:%S.%f")
+                            (d for d in groups.keys() if d),
+                            key=lambda s: datetime.strptime(s, "%Y-%m-%dT%H:%M:%S.%f")
                         )
 
                         filter_by_date = [op for d in sorted_dates for op in groups[d]]
+
                     if format_file == result_xlsx:
                         groups = defaultdict(list)
                         for item in filter_by_status:
                             date_str = item.get("date")
-                            groups[date_str].append(item)  # date_str может быть None — будет ключ None
-                        # отсортировать ключи, пропуская None
+                            groups[date_str].append(item)
                         sorted_dates = sorted(
-                            (d for d in groups.keys() if d), key=lambda s: datetime.strptime(s, "%Y-%m-%dT%H:%M:%SZ")
+                            (d for d in groups.keys() if d),
+                            key=lambda s: datetime.strptime(s, "%Y-%m-%dT%H:%M:%SZ")
                         )
 
                         filter_by_date = [op for d in sorted_dates for op in groups[d]]
+
                     if format_file == result_csv:
-                        # Преобразуем список со словарями в привичный вид чтобы программа могла с ним работать в дальнейшем
-                        # Для CSV нужно распарсить строки в словари
                         sorted_transactions = []
                         for entry in filter_by_status:
                             fields = entry[
@@ -131,6 +129,7 @@ def main():
                             reverse=False,
                         )
                     break
+
                 # Сортировка по убыванию
                 elif file_filtering3.lower() == "по убыванию":
                     if format_file == data_json:
@@ -146,7 +145,6 @@ def main():
                             reverse=True,
                         )
                     if format_file == result_csv:
-                        # Преобразуем список со словарями в привичный вид чтобы программа могла с ним работать в дальнейшем
                         sorted_transactions = []
                         for entry in filter_by_status:
                             fields = entry[
@@ -177,17 +175,15 @@ def main():
                     break
             except Exception:
                 return "Ошибка: файл с транзакциями не верно структурирован"
+
         elif file_filtering2.lower() == "нет":
-            # Пропускаем и переходим к следующей части кода  при выборе "нет"
             try:
                 if format_file == result_csv:
-                    # Преобразуем список со словарями в привичный вид чтобы программа могла с ним работать в дальнейшем
-                    # Для CSV нужно распарсить строки в словари
                     sorted_transactions = []
                     for entry in filter_by_status:
-                        fields = entry["id;state;date;amount;currency_name;currency_code;from;to;description"].split(
-                            ";"
-                        )
+                        fields = entry[
+                            "id;state;date;amount;currency_name;currency_code;from;to;description"
+                        ].split(";")
                         transaction = dict(
                             zip(
                                 [
@@ -211,13 +207,13 @@ def main():
                 break
             except Exception:
                 return "Ошибка: файл с транзакциями не верно структурирован"
-    # Фиьтрация по рублевым транзакциям (опционально)
+
+    # Фильтрация по рублевым транзакциям (опционально)
     while True:
         try:
             file_filtering3 = input("Выводить только рублевые транзакции? Да/Нет\n")
             if file_filtering3.lower() == "да":
                 if format_file == data_json:
-                    # Cтруктура вложенных словарей для формата JSON
                     filter_by_rub = [
                         item
                         for item in data_json
@@ -225,7 +221,6 @@ def main():
                     ]
                     break
                 else:
-                    # Для CSV/XLSX используется универсальная функция
                     filter_by_rub = process_bank_search(filter_by_date, "RUB")
                     break
             elif file_filtering3.lower() == "нет":
@@ -233,6 +228,7 @@ def main():
                 break
         except Exception:
             return "Ошибка: файл с транзакциями не верно структурирован"
+
     # Фильтр по ключевому слову в описании (опционально)
     while True:
         file_filtering4 = input("Отфильтровать список транзакций по определенному слову в описании? Да/Нет\n")
@@ -243,6 +239,7 @@ def main():
         elif file_filtering4.lower() == "нет":
             filter_by_word = filter_by_rub
             break
+
     # Вывод результатов
     print("Распечатываю итоговый список транзакций...")
     time.sleep(3)
@@ -253,18 +250,15 @@ def main():
 
     for i in filter_by_word:
         if format_file == data_json:
-            # Формат вывода для JSON
             if i.get("date"):
                 print(f"{get_date(i['date'])}")
-            if i.get("operationAmount", {}).get("amount") and i.get("operationAmount", {}).get("currency", {}).get(
-                "code"
-            ):
+            if i.get("operationAmount", {}).get("amount") and i.get("operationAmount", {}).get("currency", {}).get("code"):
                 amount = i.get("operationAmount", {}).get("amount")
                 code = i.get("operationAmount", {}).get("currency", {}).get("code")
                 print(f"Сумма: {amount} {code}")
             print()
+
         if format_file == result_xlsx or format_file == result_csv:
-            # Формат вывода для CSV / XLSX
             if i.get("date") and i.get("description"):
                 print(f"{get_date(i['date'])} {i['description']}")
             if i.get("from"):

@@ -1,6 +1,7 @@
 import json
 import logging
 
+
 logger = logging.getLogger("utils")
 logger.setLevel(logging.DEBUG)
 file_handler1 = logging.FileHandler("../logs/utils.log", "w", encoding="utf-8")
@@ -30,6 +31,7 @@ def load_operations(path):
     except (FileNotFoundError, json.JSONDecodeError):
         logger.error(f"Файл {path} не обнаружен")
         return []
+
 
 result_load_operations = load_operations(path)
 if __name__ == '__main__':

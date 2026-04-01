@@ -44,6 +44,7 @@ def get_date(time: str) -> str:
     # Возвращаем дату в формате дд.мм.гггг'
     return day + "." + month + "." + year
 
+
 if __name__ == '__main__':
     # Параметр содержащий номером карты
     # Активация функции mask_account_card

@@ -1,13 +1,11 @@
-import pytest
-
-from src.decorators import log, my_function
+from src.decorators import log
 
 LOG_FILE = "mylog.txt"
 
 
 @log(filename=LOG_FILE)
 def test_my_function_zero_division_txt():
-    # Тестируем деление на 0 в mylog.txt
+    """Тестируем деление на 0 — запись ошибки в файл mylog.txt"""
     def my_function(x, y):
         return x / y
 
@@ -25,7 +23,7 @@ with open(LOG_FILE, "r", encoding="utf-8") as file:
 
 @log(filename=LOG_FILE)
 def test_my_function_valid_txt():
-    # Тестируем деление на 2 в mylog.txt
+    """Тестируем успешное выполнение — запись в файл mylog.txt"""
     def my_function(x, y):
         return x / y
 
@@ -42,7 +40,7 @@ with open(LOG_FILE, "r", encoding="utf-8") as file:
 
 @log(filename=None)
 def test_my_function_zero_division_consol(capsys):
-    # Тестируем деление на 0 в консоли
+    """Тестируем деление на 0 — вывод ошибки в консоль"""
     def my_function(x, y):
         return x / y
 
@@ -50,7 +48,6 @@ def test_my_function_zero_division_consol(capsys):
 
     captured = capsys.readouterr()
 
-    # Проверяем, что вывод содержит ожидаемые строки
     assert "Функция: my_function" in captured.out
     assert "Ошибка: division by zero" in captured.out
     assert "Входные параметры:" in captured.out
@@ -59,7 +56,7 @@ def test_my_function_zero_division_consol(capsys):
 
 @log(filename=None)
 def test_my_function_valid_consol(capsys):
-    # Тестируем деление на 2 в консоли
+    """Тестируем успешное выполнение — вывод в консоль"""
     def my_function(x, y):
         return x / y
 
@@ -67,7 +64,6 @@ def test_my_function_valid_consol(capsys):
 
     captured = capsys.readouterr()
 
-    # Проверяем, что вывод содержит ожидаемые строки
     assert "Функция: my_function" in captured.out
     assert "Результат: 5.0" in captured.out
     assert "Время выполнения:" in captured.out

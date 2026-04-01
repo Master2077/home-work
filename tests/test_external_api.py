@@ -1,11 +1,9 @@
-import unittest
 from unittest import mock
-from unittest.mock import Mock, patch
+from unittest.mock import Mock
 
 import pytest
 
 from src.external_api import convert_valute
-from src.utils import result_load_operations
 
 
 @pytest.fixture

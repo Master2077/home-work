@@ -1,9 +1,6 @@
 import json
-import unittest
 from unittest import mock
-from unittest.mock import mock_open
 
-import pytest
 
 from src.utils import load_operations
 
